@@ -12,7 +12,8 @@ module.exports.login = async (req, res) => {
 
 module.exports.loginPost = async (req, res) => {
     
-    const email = req.body.email;
+    try {
+        const email = req.body.email;
     const password = req.body.password ;
     const user = await Account.findOne({
         email : email,
@@ -38,6 +39,9 @@ module.exports.loginPost = async (req, res) => {
     }
     res.cookie("token",user.token);
     res.redirect(`/${config.prefixAdmin}/dashboard`);
+    } catch (error) {
+        res.redirect("back");
+    }
 }
 
 module.exports.logout = async (req, res) => {

@@ -83,12 +83,11 @@ module.exports.index = async (req,res) => {
 
     
 
-
     res.render(`${config.prefixAdmin}/pages/dashbroad/index.pug`,{
         pageTitle : "Trang tổng quan",
         products : statistic.products,
         products_category : statistic.products_category,
         account : statistic.accounts,
-        user:  statistic.users
+        users:  statistic.users
     });
 }

@@ -12,6 +12,10 @@ router.get("/", category.index);
 
 router.get("/create", category.create);
 
+// [GET] /admin/products-category/detail/:id
+
+router.get("/detail/:id", category.detail);
+
 // POST /admin/products-category/create
 
 router.post("/create",

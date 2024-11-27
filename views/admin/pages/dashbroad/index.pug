@@ -4,23 +4,23 @@ block main
   h1 Trang tổng quan bên admin
   h1 Tổng quan
 
-  div #{user.fullName}
+  div #{users.fullName}
   .row.mt-4
     .col-12
       .card.mb-4
         .card-header Thông tin tài khoản
         .card-body
-          if(user.avatar)
+          if(users.avatar)
             img(
               src=user.avatar
               style="height: 100px;margin-bottom: 15px;"
             )
-          if(user.fullName)
-            p Họ tên: <b>#{user.fullName}</b>
+          if(users.fullName)
+            p Họ tên: <b>#{users.fullName}</b>
           if(user.email)
-            p Email: <b>#{user.email}</b>
+            p Email: <b>#{users.email}</b>
           if(user.phone)
-            p Số điện thoại: <b>#{user.phone}</b>
+            p Số điện thoại: <b>#{users.phone}</b>
           if(roles.title)
             p Phân quyền: <b>#{roles.title}</b>
       .col-6
@@ -34,9 +34,9 @@ block main
         .card.mb-4
           .card-header Tài khoản người dùng
           .card-body
-            p Số lượng: <b>#{user.total} new</b>
-            p Hoạt động: <b>#{user.active}</b>
-            p Dừng hoạt động: <b>#{user.inactive}</b>
+            p Số lượng: <b>#{users.total}</b>
+            p Hoạt động: <b>#{users.active}</b>
+            p Dừng hoạt động: <b>#{users.inactive}</b>
       .col-6
         .card.mb-4
           .card-header Danh mục sản phẩm

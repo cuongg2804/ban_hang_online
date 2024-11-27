@@ -5,8 +5,7 @@ const createTree  = require("../../helper/category.helper");
 // [GET] /admin/products-category
 module.exports.index = async (req, res) => {
     const records = await productCategory.find({
-        deleted : false,
-        status : "active"
+        deleted : false
     })
 
     const newRecord = createTree(records);
@@ -16,6 +15,24 @@ module.exports.index = async (req, res) => {
         pageTitle : "Danh mục sản phẩm",
         records : newRecord
     })
+}
+
+
+module.exports.detail = async (req, res) => {
+    const id = req.params.id;
+    const records = await productCategory.findOne({
+        _id : id ,
+        deleted : false
+    })
+    console.log(records);
+    //const newRecord = createTree(records);
+
+    
+    res.render("admin/pages/product-category/detail.pug", {
+        pageTitle : "Danh mục sản phẩm",
+        records : records
+    })
+   
 }
 
 module.exports.create = async (req, res) => {
@@ -54,8 +71,7 @@ module.exports.edit = async (req, res) => {
         const newRecords = createTree(records);
         const data = await productCategory.findOne({
             _id : id,
-            deleted : false,
-            status : "active"
+            deleted : false
         })
         res.render("admin/pages/product-category/edit.pug",{
             pageTitle :"Chỉnh sửa danh mục sản phẩm",
