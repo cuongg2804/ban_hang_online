@@ -39,4 +39,16 @@ uploadCloud.uploadSingle,
 category.editPatch
 );
 
+// GET /admin/products-category/delete/:id
+
+router.get("/delete/:id", category.delete);
+
+//GET /admin/products-category/bins
+
+router.get("/bins", category.bin);
+
+// [GET] /admin/products-category/recovery/:id
+
+router.get("/recovery/:id", category.recovery);
+
 module.exports = router

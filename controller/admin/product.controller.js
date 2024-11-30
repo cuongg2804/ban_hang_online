@@ -136,7 +136,6 @@ module.exports.changeMulti = async (req, res) => {
 
 module.exports.delete = async (req,res) => {
     const id = req.params.id ;
-
     await product.updateOne({
         _id: id
     },{
@@ -234,3 +233,45 @@ module.exports.detail = async (req, res) => {
     })
 }
 
+
+module.exports.bin = async (req,res) =>{
+
+    const find_list = {
+        deleted : true
+    }
+ 
+    //Search
+    if(req.query.keyword){
+        const regex = new RegExp(req.query.keyword, "i");
+        find_list.title = regex ;
+    }
+
+    //End Search 
+
+    //Pagination 
+    const countRecord = await product.countDocuments(find_list);
+    const objectPagination = Pagination(req,countRecord) ;   
+    //End Pagination
+
+    const products_list  = await product.find(find_list).limit(objectPagination.limitItem).skip(objectPagination.skipItem);
+
+    res.render("admin/pages/product/bin.pug",{
+        pageTitle : "Trang thùng rác",
+        products : products_list,
+        keyword : req.query.keyword,
+        objectPagination : objectPagination
+    });
+}
+
+module.exports.recovery = async (req, res) => {
+    const id = req.params.id ;
+    await product.updateOne({
+        _id: id
+    },{
+        deleted: false,
+        deletedAt : "",
+        deletedBy : ""
+    })
+    
+    res.redirect(`back`);
+}

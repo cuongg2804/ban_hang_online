@@ -135,7 +135,7 @@ if(form_change_multi){
 }
 //End_Change_Multi_Status
 
-//Delete_1_SP
+// Delete_1_SP
 const list_btnDel = document.querySelectorAll("[button-del]");
 list_btnDel.forEach((button) => {
     button.addEventListener("click", () => {
@@ -320,3 +320,27 @@ if(tableCart) {
   });
 }
 //End Update item cart
+
+
+//Button Delete
+// const button_delete = document.querySelectorAll("[button-del]");
+// if(button_delete){
+//     button_delete.forEach((button) => {
+        
+//          button.addEventListener("click", () =>{
+//             const id =  button.getAttribute("data_id");
+//             const isConfirm = confirm("Bạn có chắc muốn xóa bản ghi ?");
+//             if(isConfirm){
+//                 fetch(`products/delete/${id}`, {})
+//                 .then(res => res.json())
+//                 .then(data => {
+//                     if(data.code == 200) {
+                        
+//                     }
+//                 })
+//             }
+//         })
+//     })
+// }
+
+//End Button Delete

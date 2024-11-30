@@ -20,6 +20,7 @@ const productCategorySchema = new mongoose.Schema(
         default: false,
       },
       deletedAt: Date,
+      deletedBy: String
     },
     {
       timestamps: true,

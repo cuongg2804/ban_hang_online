@@ -1,4 +1,4 @@
-extends  ../../layout/default-2.pug
+extends  ../../layout/default.pug
 include ../../mixins/filter.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
@@ -38,7 +38,9 @@ block main
             td #{item.title}
             td #{item.price}$
             td
-              button(class="btn btn-warning btn-sm" recovery id = item.id) Khôi phục
+              a(class="btn btn-warning btn-sm" 
+              href = `recovery/${item.id}`
+              recovery id = item.id) Khôi phục
   script(src="/admin/bin.js") 
   nav 
     +pagination(objectPagination)

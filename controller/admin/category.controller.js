@@ -91,3 +91,44 @@ module.exports.editPatch = async (req, res) => {
     req.flash("success","Cập nhật danh mục sản phẩm thành công");
     res.redirect(`/${config.prefixAdmin}/products-category`);
 }
+
+// [GET] /admin/products-category/delete/:id
+module.exports.delete = async (req, res) => {
+    const id = req.params.id ;
+    await productCategory.updateOne({
+        _id: id
+    },{
+        deleted: true,
+        deletedAt : new Date(),
+        deletedBy : res.locals.user.id
+    })
+    req.flash("success","Xóa danh mục sản phẩm thành công");
+    res.redirect(`/${config.prefixAdmin}/products-category`);
+}
+
+//GET /admin/products-category/bins
+module.exports.bin = async (req, res) => {
+    const records = await productCategory.find({
+        deleted : true
+    })
+
+    const newRecord = createTree(records);
+
+    
+    res.render("admin/pages/product-category/bin.pug", {
+        pageTitle : "Khôi phục danh mục sản phẩm",
+        records : newRecord
+    })
+}
+
+module.exports.recovery = async (req, res) => {
+    const id = req.params.id ;
+    await productCategory.updateOne({
+        _id: id
+    },{
+        deleted: false,
+        deletedAt : "",
+    })
+    req.flash("success","Khôi phục danh mục sản phẩm thành công");
+    res.redirect(`back`);
+}

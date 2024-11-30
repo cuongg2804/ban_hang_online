@@ -15,7 +15,7 @@ router.patch("/changestatus/:status/:id", product.changeStatus);
 
 router.patch("/change-multi", product.changeMulti);
 
-//[DELETE] :  /admin/products/delete/
+//[DELETE] :  /admin/products/delete/id
 
 router.delete("/delete/:id", product.delete);
 
@@ -41,6 +41,12 @@ router.patch("/edit/:id",  upload.single('thumbnail'),uploadCloud.uploadSingle,v
 // GET /admin/products/detail/id
 
 router.get("/detail/:id",product.detail);
+
+// GET /admin/products
+
+router.get("/bins", product.bin);
+
+router.get("/recovery/:id", product.recovery);
 
 
 module.exports = router ;

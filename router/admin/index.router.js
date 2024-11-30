@@ -1,7 +1,6 @@
 const dashBroad = require("./dashbroad.router") ;
 const systemConfig = require("../../config/system");
 const Product = require("./product.router");
-const Bin = require("./bin.router");
 const Category = require("./category.router");
 const Role = require("./role.router");
 const Accounts = require("./accounts.router");
@@ -17,8 +16,6 @@ module.exports = (app) => {
     app.use("/" + Admin_Path + "/dashboard",middlewaresAuth.requireAuth,dashBroad);
     
     app.use("/" + Admin_Path + "/products",middlewaresAuth.requireAuth, Product);
-    
-    app.use("/" + Admin_Path + "/bins", middlewaresAuth.requireAuth,Bin);
 
     app.use("/" + Admin_Path + "/products-category", middlewaresAuth.requireAuth,Category);
 
