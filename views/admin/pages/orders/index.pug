@@ -8,7 +8,7 @@ block main
 
     +alert-success()
 
-    h1(class="mb-4") Danh sách sản phẩm
+    h1(class="mb-4") Danh sách đơn hàng
     .card.mb-3
       .card-header Bộ lọc và Tìm kiếm
       .card-body
@@ -25,13 +25,12 @@ block main
             )   
           thead
             tr
-              td
-                input(type="checkbox" name="checkall")
               th STT
               th Mã đơn hàng
               th Tổng đơn
-              th Trạng thái
               th Thời gian đặt
+              th Trạng thái
+              th Cập nhật 
               th Hành động
               //- th Vị trí
             
@@ -39,12 +38,11 @@ block main
           tbody
             each item,index in orders 
               tr 
-                
-                td
-                  input(type="checkbox" name="id" value=item.id)
                 td #{index + 1}
                 td #{item.id}
                 td #{item.totalPrice}$
+                td
+                  div #{moment(item.createdAt).format("DD-MM-YYYY")}
                 td
                   if(item.status === "Đã xác nhận") 
                     a(
@@ -64,7 +62,7 @@ block main
                     )  Chưa xác nhận
                 td
                   div #{item.createByFullName}
-                  div #{moment(item.createdAt).format("DD-MM-YYYY")}
+                  div #{moment(item.updateAt).format("DD-MM-YYYY")}
                 td
                   a(
                       href=`/${prefixAdmin}/orders/detail/${item.id}`
