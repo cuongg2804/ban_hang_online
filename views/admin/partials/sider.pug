@@ -1,9 +1,11 @@
 .sider
   .inner-menu
-    ul 
+    ul
       
       li
         a(href=`/${prefixAdmin}/dashboard`) Tổng quan
+      li
+          a(href=`/${prefixAdmin}/orders`) Đơn hàng
       if(roles.permissions.includes("products-view"))
         li
           a(href=`/${prefixAdmin}/products`) Sản phẩm
@@ -21,3 +23,4 @@
           a(href=`/${prefixAdmin}/accounts`) Tài khoản
       li
           a(href=`/${prefixAdmin}/settings/general`) Cấu hình chung
+      

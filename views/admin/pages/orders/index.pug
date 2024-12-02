@@ -1,0 +1,106 @@
+extends  ../../layout/default.pug
+
+include ../../mixins/search.pug
+
+include ../../mixins/alert.pug
+
+block main
+
+    +alert-success()
+
+    h1(class="mb-4") Danh sách sản phẩm
+    .card.mb-3
+      .card-header Bộ lọc và Tìm kiếm
+      .card-body
+        .row
+            .col-6
+                +search(keyword)
+          
+      
+      .card-header Danh sách đơn hàng
+       
+        table(
+              class="table table-hover table-sm"
+              checkbox-multi
+            )   
+          thead
+            tr
+              td
+                input(type="checkbox" name="checkall")
+              th STT
+              th Mã đơn hàng
+              th Tổng đơn
+              th Trạng thái
+              th Thời gian đặt
+              th Hành động
+              //- th Vị trí
+            
+
+          tbody
+            each item,index in orders 
+              tr 
+                
+                td
+                  input(type="checkbox" name="id" value=item.id)
+                td #{index + 1}
+                td #{item.id}
+                td #{item.totalPrice}$
+                td
+                  if(item.status === "Đã xác nhận") 
+                    a(
+                      href="javascript:;" 
+                      class="badge badge-success" 
+                      button-changeStatus 
+                      data_id = item.id 
+                      data_status = "inactive"
+                    ) Đã xác nhận
+                  else
+                    a(
+                      href="javascript:;" 
+                      class="badge badge-danger" 
+                      button-changeStatus 
+                      data_id = item.id 
+                      data_status = "active"
+                    )  Chưa xác nhận
+                td
+                  div #{item.createByFullName}
+                  div #{moment(item.createdAt).format("DD-MM-YYYY")}
+                td
+                  a(
+                      href=`/${prefixAdmin}/orders/detail/${item.id}`
+                      class="btn btn-info btn-sm ml-1"
+                    ) Chi tiết
+                  
+                    a(
+                      href=`/${prefixAdmin}/orders/edit/${item.id}`
+                      class="btn btn-warning btn-sm"
+                    ) Sửa
+                  
+                    button(
+                      class="btn btn-danger btn-sm ml-1"
+                      button-del
+                      data_id = item.id 
+                    ) Xóa
+    
+
+
+      form( 
+        form-changeStatus
+        method="POST"
+        action=""
+        data-path="/admin/products/changestatus"
+      )
+
+      form(
+        form-del
+        method="POST"
+        action=""
+        data-path="/admin/products/delete"
+      )
+
+      form(
+        form-del-all
+        method="POST"
+        action=""
+        data-path="/admin/products/delete-all"
+      )
