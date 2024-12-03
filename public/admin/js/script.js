@@ -298,24 +298,22 @@ if(showAlert) {
 
 
 //Button Delete
-// const button_delete = document.querySelectorAll("[button-del]");
-// if(button_delete){
-//     button_delete.forEach((button) => {
-        
-//          button.addEventListener("click", () =>{
-//             const id =  button.getAttribute("data_id");
-//             const isConfirm = confirm("Bạn có chắc muốn xóa bản ghi ?");
-//             if(isConfirm){
-//                 fetch(`products/delete/${id}`, {})
-//                 .then(res => res.json())
-//                 .then(data => {
-//                     if(data.code == 200) {
-                        
-//                     }
-//                 })
-//             }
-//         })
-//     })
-// }
+const button_cancel = document.querySelector("[cancel-order]");
+if(button_cancel){
+    
+    button_cancel.addEventListener("click", () =>{
+        const id =  button_cancel.getAttribute("data_id");
+        const isConfirm = confirm("Bạn có chắc muốn xóa đơn hàng ?");
+        if(isConfirm){
+            fetch(`/admin/orders/cancel/${id}`, {})
+            .then(res => res.json())
+            .then(data => {
+                if(data.code == 200) {
+                    console.log("Ok");
+                }
+            })
+        }
+    })
+}
 
 //End Button Delete

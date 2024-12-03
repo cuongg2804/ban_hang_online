@@ -3,7 +3,8 @@ extends ../../layout/default.pug
 
 block main
   .container.my-3
-
+    h1(class="mb-4") Thông tin đơn hàng
+    
     if(order)
       .row
         .col-12
@@ -51,6 +52,7 @@ block main
                     td #{item.quantity}
                     td #{item.totalPrice}$
 
+
           //-fix
           if(order.products.length > 0)
             h3(class="text-right") Tổng đơn hàng: #{order.totalPrice}$
@@ -60,10 +62,9 @@ block main
               style="float: right; margin-left: 10px;"
               accept-order
             ) Xác nhận
-            a(
-              href=`/${prefixAdmin}/orders/cancel/${order.id}`
+            button(     
               class="btn btn-danger btn-sm"
               style="float: right;"
-              data_id="1"
+              data_id=order.id
               cancel-order
             ) Hủy
