@@ -115,3 +115,15 @@ module.exports.accept = async (req ,res) => {
     })
     res.redirect("/admin/orders");
 }
+
+module.exports.cancel = async (req ,res) => {
+    const idAdmin  = req.cookies.id;
+    await Order.updateOne({
+        _id :req.params.id
+    },{
+        user_id : idAdmin,
+        updatedAt: Date.now(),
+        status : "Bị hủy"
+    })
+    res.redirect("/admin/orders");
+}

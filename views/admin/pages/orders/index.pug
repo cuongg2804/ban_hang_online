@@ -9,15 +9,8 @@ block main
     +alert-success()
 
     h1(class="mb-4") Danh sách đơn hàng
-    .card.mb-3
-      .card-header Bộ lọc và Tìm kiếm
-      .card-body
-        .row
-            .col-6
-                +search(keyword)
-          
-      
-      .card-header Danh sách đơn hàng
+    .card.mb-4
+      .card-header 
        
         table(
               class="table table-hover table-sm"
@@ -30,8 +23,8 @@ block main
               th Tổng đơn
               th Thời gian đặt
               th Trạng thái
-              th Cập nhật 
-              th Hành động
+              th Cập nhật
+              th
               //- th Vị trí
             
 
@@ -46,20 +39,12 @@ block main
                 td
                   if(item.status === "Đã xác nhận") 
                     a(
-                      href="javascript:;" 
                       class="badge badge-success" 
-                      button-changeStatus 
-                      data_id = item.id 
-                      data_status = "inactive"
                     ) Đã xác nhận
                   else
                     a(
-                      href="javascript:;" 
                       class="badge badge-danger" 
-                      button-changeStatus 
-                      data_id = item.id 
-                      data_status = "active"
-                    )  Chưa xác nhận
+                    ) #{item.status}
                 td
                   div #{item.createByFullName}
                   div #{moment(item.updateAt).format("DD-MM-YYYY")}
@@ -69,17 +54,7 @@ block main
                       class="btn btn-info btn-sm ml-1"
                     ) Chi tiết
                   
-                    a(
-                      href=`/${prefixAdmin}/orders/edit/${item.id}`
-                      class="btn btn-warning btn-sm"
-                    ) Sửa
-                  
-                    button(
-                      class="btn btn-danger btn-sm ml-1"
-                      button-del
-                      data_id = item.id 
-                    ) Xóa
-    
+                    
 
 
       form( 

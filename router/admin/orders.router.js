@@ -13,6 +13,6 @@ router.get("/accept/:id", controller.accept);
 
 // [GET] /admin/orders/cancel/:id
 
-//router.get("/cancel/:id", controller.cancel);
+router.get("/cancel/:id", controller.cancel);
 
 module.exports = router;
