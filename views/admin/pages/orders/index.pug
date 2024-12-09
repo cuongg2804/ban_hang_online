@@ -34,53 +34,38 @@ block main
                 td
                   div #{moment(item.createdAt).format("DD-MM-YYYY")}
                 td
-                  if(item.status === "Đã xác nhận") 
-                    a(
-                      class="badge badge-success" 
-                    ) Đã xác nhận
-                  else
-                    a(
-                      class="badge badge-danger" 
-                    )  #{item.status}
+                  case item.status
+                    when "pending"
+                      a(
+                        class="btn btn-outline-danger" 
+                      ) Chờ xác nhận
+                    when "confirmed"
+                      a(
+                        class="btn btn-outline-primary" 
+                      ) Đã xác nhận
+                    when "processing"
+                      a(
+                        class="btn btn-outline-secondary" 
+                      ) Đang xử lý
+                    when "shipping"
+                      a(
+                        class="btn btn-outline-info" 
+                      ) Đang giao hàng
+                    when "delivered"
+                      a(
+                        class="btn btn-outline-success" 
+                      ) Đã giao hàng
+                    when "cancelled"
+                      a(
+                        class="btn btn-outline-danger" 
+                      ) Bị hủy
+                  
                 td
                   div #{item.createByFullName}
                   div #{moment(item.updateAt).format("DD-MM-YYYY")}
                 td
                   a(
-                      href=`/${prefixAdmin}/orders/detail/${item.id}`
+                      href=`/${prefixAdmin}/orders/detail/${item.id}?status=${item.status}`
                       class="btn btn-info btn-sm ml-1"
                     ) Chi tiết
-                  
-                    //- a(
-                    //-   href=`/${prefixAdmin}/orders/edit/${item.id}`
-                    //-   class="btn btn-warning btn-sm"
-                    //- ) Sửa
-                  
-                    //- button(
-                    //-   class="btn btn-danger btn-sm ml-1"
-                    //-   button-del
-                    //-   data_id = item.id 
-                    //- ) Xóa
-    
-
-
-      form( 
-        form-changeStatus
-        method="POST"
-        action=""
-        data-path="/admin/products/changestatus"
-      )
-
-      form(
-        form-del
-        method="POST"
-        action=""
-        data-path="/admin/products/delete"
-      )
-
-      form(
-        form-del-all
-        method="POST"
-        action=""
-        data-path="/admin/products/delete-all"
-      )
+                   

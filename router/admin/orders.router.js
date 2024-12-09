@@ -15,4 +15,7 @@ router.get("/accept/:id", controller.accept);
 
 router.get("/cancel/:id", controller.cancel);
 
+// [POST]   /admin/orders/update/:id
+router.post("/update/:id", controller.edit);
+
 module.exports = router;

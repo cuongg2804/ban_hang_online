@@ -51,20 +51,29 @@ block main
                     td #{item.price}$
                     td #{item.quantity}
                     td #{item.totalPrice}$
+    
+      .row
+        .col-12
+          div.select-container
+            select(name="orderStatus", id="orderStatus", class="form-select-status-order")
+              option(value="confirmed", selected=status == "confirmed") Đã xác nhận
+              option(value="processing", selected=status == "processing") Đang xử lý
+              option(value="shipping", selected=status == "shipping") Đang giao hàng
+              option(value="delivered", selected=status == "delivered") Đã giao hàng
+              option(value="cancelled", selected=status == "cancelled") Bị hủy
 
 
-          //-fix
+       
           if(order.products.length > 0)
-            h3(class="text-right") Tổng đơn hàng: #{order.totalPrice}$
-            a(
-              href=`/${prefixAdmin}/orders/accept/${order.id}`
-              class="btn btn-warning btn-sm"
-              style="float: right; margin-left: 10px;"
-              accept-order
-            ) Xác nhận
-            a(   
-              class="btn btn-danger btn-sm"
+            button(   
+              class="btn btn-primary"
               style="float: right;"
               data_id=order.id
-              cancel-order
-            ) Hủy
+              id="update-order"
+            ) Cập nhật
+    form(
+      data-path="/admin/orders/update"
+      method="POST"
+      enctype="multipart/form-data"
+      form-update
+    )

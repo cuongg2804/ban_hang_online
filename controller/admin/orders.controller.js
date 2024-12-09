@@ -53,7 +53,7 @@ module.exports.index = async (req ,res) => {
         }
         for(const record  of orderList){
             let id = record._id.id;
-            console.log(id);
+            
         }
     res.render("admin/pages/orders/index.pug",{
         pageTitle :"Đơn hàng",
@@ -64,6 +64,7 @@ module.exports.index = async (req ,res) => {
 module.exports.detail = async (req ,res) => {
     try {
         const idOrder = req.params.id;
+        const status = req.query.status;
         const order = await Order.findOne({
             _id: idOrder
         });
@@ -82,7 +83,8 @@ module.exports.detail = async (req ,res) => {
 
         res.render("admin/pages/orders/detail.pug", {
             pageTitle: "Đặt hàng thành công",
-            order : order
+            order : order,
+            status : status
     });
     } catch (error) {
         res.redirect("back");
@@ -127,4 +129,11 @@ module.exports.cancel = async (req ,res) => {
         code : 200
     });
     
+}
+
+module.exports.edit = async (req ,res) => {
+    await Order.updateOne({
+        _id : req.params.id
+    },req.query)
+    res.redirect("/admin/orders");
 }
