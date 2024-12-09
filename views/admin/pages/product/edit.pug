@@ -4,7 +4,7 @@ include ../../mixins/select-tree.pug
 block main
   if(roles.permissions.includes("products-edit"))
     +alert-error()
-    h1(class="mb-4") Chỉnh sửa sản phẩm
+    h1(class="mb-4") Chỉnh sửa Sản phẩm
 
     form(
       action=`/${prefixAdmin}/products/edit/${products.id}?_method=PATCH`

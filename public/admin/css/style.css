@@ -94,5 +94,27 @@ to {
 }
 /*End Upload Image*/
 
+.select-container {
+  position: relative; /* Để thêm icon */
+  display: inline-block;
+}
 
+select.form-select-status-order {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  color: #333;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
 
+select.form-select-status-order:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}

@@ -78,7 +78,8 @@ const box_change_multi = document.querySelector("[checkbox-multi]");
 if(box_change_multi) {
   const checkall = box_change_multi.querySelector("input[name='checkall']");
   const listInput = box_change_multi.querySelectorAll("input[name='id']");
-  checkall.addEventListener("click", () => {
+  if(checkall){
+    checkall.addEventListener("click", () => {
         if(checkall.checked){
             listInput.forEach((box) => {
                 box.checked= true ;
@@ -91,6 +92,7 @@ if(box_change_multi) {
             }
         )}
   })
+  }
   listInput.forEach((box) => {
     box.addEventListener("click", () => {
         const numChecked = form_change_multi.querySelectorAll("input[name='id']:checked");
@@ -297,7 +299,7 @@ if(showAlert) {
 //End Update item cart
 
 
-//Button cancel
+//Button Delete
 const button_cancel = document.querySelector("[cancel-order]");
 if(button_cancel){
     
@@ -309,7 +311,7 @@ if(button_cancel){
             .then(res => res.json())
             .then(data => {
                 if(data.code == 200) {
-                   
+                    console.log("Ok");
                 }
             })
         }
@@ -317,3 +319,29 @@ if(button_cancel){
 }
 
 //End Button Delete
+
+//Change-status-
+const select_status = document.getElementById("orderStatus");
+let statusOrders = "";
+if(select_status){
+    select_status.addEventListener("change", (item) =>{
+        statusOrders += item.target.value +"" ;
+    })
+}
+
+const button_update = document.getElementById("update-order");
+if(button_update){
+    button_update.addEventListener("click", () => {
+        const isConfirm = confirm("Bạn có chắc muốn cập nhật trạng thái đơn hàng?");
+        const form = document.querySelector("[form-update]");
+
+        if(isConfirm){
+            const id = button_update.getAttribute("data_id");
+            const pathU = form.getAttribute("data-path");
+            form.action =`${pathU}/${id}?status=${statusOrders}`;
+            form.submit();
+        }
+
+    })
+}
+//End Change-status-orders

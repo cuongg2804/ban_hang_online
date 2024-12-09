@@ -4,23 +4,23 @@ block main
   h1 Trang tổng quan bên admin
   h1 Tổng quan
 
-  div #{users.fullName}
+  div #{user.fullName}
   .row.mt-4
     .col-12
       .card.mb-4
         .card-header Thông tin tài khoản
         .card-body
-          if(users.avatar)
+          if(user.avatar)
             img(
               src=user.avatar
               style="height: 100px;margin-bottom: 15px;"
             )
-          if(users.fullName)
-            p Họ tên: <b>#{users.fullName}</b>
+          if(user.fullName)
+            p Họ tên: <b>#{user.fullName}</b>
           if(user.email)
-            p Email: <b>#{users.email}</b>
+            p Email: <b>#{user.email}</b>
           if(user.phone)
-            p Số điện thoại: <b>#{users.phone}</b>
+            p Số điện thoại: <b>#{user.phone}</b>
           if(roles.title)
             p Phân quyền: <b>#{roles.title}</b>
       .col-6

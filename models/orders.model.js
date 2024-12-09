@@ -19,7 +19,7 @@ const orderSchema = new mongoose.Schema(
     ],
     status : {
       type : String,
-      default : "Chưa xác nhận"
+      default : "pending"
     },
     deleted : {
       type : String ,

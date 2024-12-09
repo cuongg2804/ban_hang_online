@@ -5,19 +5,13 @@ const Pagination = require("../../helper/pagination.helper");
 const Account = require("../../models/accounts.model");
 module.exports.index = async (req ,res) => {
     const find_list = {
-        // deleted : false
     }
- 
-    //Ba nút lọc
-    const filterStatus = filter(req);
-    //End ba nút
-
     //Search
-    if(req.query.keyword){
-        const regex = new RegExp(req.query.keyword, "i");
-        find_list.title = regex ;
-    }
-
+    // if(req.query.keyword){
+    //     const regex = new RegExp(req.query.keyword, "i");
+    //     find_list.id = regex ;
+    // }
+    // console.log(find_list);
     if(req.query.status) {
         find_list.status = req.query.status
     }
@@ -27,16 +21,6 @@ module.exports.index = async (req ,res) => {
     const countRecord = await Order.countDocuments(find_list);
     const objectPagination = Pagination(req,countRecord) ;   
     //End Pagination
-
-    //Sort
-    const sort = {} ;
-    if(req.query.sortKey && req.query.sortValue) {
-        sort[req.query.sortKey] = req.query.sortValue ;
-    }
-    else {
-        sort.position = "desc" ;
-    }
-    //End Sort
 
     
 
@@ -67,8 +51,10 @@ module.exports.index = async (req ,res) => {
             }
             
         }
-    
-    
+        for(const record  of orderList){
+            let id = record._id.id;
+            
+        }
     res.render("admin/pages/orders/index.pug",{
         pageTitle :"Đơn hàng",
         orders : orderList
@@ -78,6 +64,7 @@ module.exports.index = async (req ,res) => {
 module.exports.detail = async (req ,res) => {
     try {
         const idOrder = req.params.id;
+        const status = req.query.status;
         const order = await Order.findOne({
             _id: idOrder
         });
@@ -96,7 +83,8 @@ module.exports.detail = async (req ,res) => {
 
         res.render("admin/pages/orders/detail.pug", {
             pageTitle: "Đặt hàng thành công",
-            order : order
+            order : order,
+            status : status
     });
     } catch (error) {
         res.redirect("back");
@@ -125,5 +113,27 @@ module.exports.cancel = async (req ,res) => {
         updatedAt: Date.now(),
         status : "Bị hủy"
     })
+    res.redirect("/admin/orders");
+}
+
+module.exports.cancel = async (req ,res) => {
+    const idAdmin  = req.cookies.id;
+    await Order.updateOne({
+        _id :req.params.id
+    },{
+        user_id : idAdmin,
+        updatedAt: Date.now(),
+        status : "Bị hủy"
+    })
+    res.json({
+        code : 200
+    });
+    
+}
+
+module.exports.edit = async (req ,res) => {
+    await Order.updateOne({
+        _id : req.params.id
+    },req.query)
     res.redirect("/admin/orders");
 }
