@@ -56,6 +56,7 @@ block main
         .col-12
           div.select-container
             select(name="orderStatus", id="orderStatus", class="form-select-status-order")
+              option(value="pending", checked=status == "pending") Chờ xác nhận
               option(value="confirmed", selected=status == "confirmed") Đã xác nhận
               option(value="processing", selected=status == "processing") Đang xử lý
               option(value="shipping", selected=status == "shipping") Đang giao hàng
