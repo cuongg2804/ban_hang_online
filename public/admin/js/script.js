@@ -345,3 +345,68 @@ if(button_update){
     })
 }
 //End Change-status-orders
+
+//Get-Orders-By-Status
+const select_status_list = document.getElementById("orderStatusList");
+
+if(select_status_list){
+    select_status_list.addEventListener("change", (item) =>{
+        fetch(`/admin/orders/list-orders?status=${item.target.value}`, {})
+        .then(res => res.json())
+        .then(data => {
+            if(data.code == 200) {
+                let listOrderNew = `Không có đơn hàng !`;
+                if( data.listOrder.length >0 ){
+                     listOrderNew = data.listOrder.map((item, index) => {
+                    
+                        return `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td>${item._id}</td>
+                                    <td>${item.totalPrice}$</td>
+                                    <td>
+                                        <div>${moment(item.createdAt).format("DD-MM-YYYY")}</div>
+                                    </td>
+                                    <td>
+                                        ${(() => {
+                                            switch (item.status) {
+                                                case "pending":
+                                                    return `<a class="btn btn-outline-danger">Chờ xác nhận</a>`;
+                                                case "confirmed":
+                                                    return `<a class="btn btn-outline-primary">Đã xác nhận</a>`;
+                                                case "processing":
+                                                    return `<a class="btn btn-outline-secondary">Đang xử lý</a>`;
+                                                case "shipping":
+                                                    return `<a class="btn btn-outline-info">Đang giao hàng</a>`;
+                                                case "delivered":
+                                                    return `<a class="btn btn-outline-success">Đã giao hàng</a>`;
+                                                case "cancelled":
+                                                    return `<a class="btn btn-outline-danger">Bị hủy</a>`;
+                                                default:
+                                                    return '';
+                                            }
+                                        })()}
+                                    </td>
+                                    <td>
+                                        <div>${item.createByFullName}</div>
+                                        <div>${moment(item.updateAt).format("DD-MM-YYYY")}</div>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/orders/detail/${item._id}?status=${item.status}" class="btn btn-info btn-sm ml-1">Chi tiết</a>
+                                    </td>
+                                </tr>
+                            `;
+                        }).join(''); 
+                
+                   
+                   
+                } 
+                const tbody = document.getElementById("orderList");
+                tbody.innerHTML = listOrderNew
+            }
+        })
+    })
+}
+
+
+//End Get-Orders-By-Status

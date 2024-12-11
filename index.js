@@ -12,9 +12,10 @@ var path = require('path');
 const moment = require('moment');
 const http = require("http");
 
+app.locals.moment = moment;
 dotenv.config();
 
-app.locals.moment = moment;
+
 app.use(bodyParser.urlencoded({ extended: false }));
 
 const routersClient = require("./router/client/index.router");

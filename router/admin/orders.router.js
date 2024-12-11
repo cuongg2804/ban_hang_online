@@ -18,4 +18,7 @@ router.get("/cancel/:id", controller.cancel);
 // [POST]   /admin/orders/update/:id
 router.post("/update/:id", controller.edit);
 
+//[GET] /admin/orders/list-orders
+router.get("/list-orders",controller.orderList);
+
 module.exports = router;

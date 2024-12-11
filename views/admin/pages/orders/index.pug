@@ -3,6 +3,8 @@ extends  ../../layout/default.pug
 include ../../mixins/search.pug
 
 include ../../mixins/alert.pug
+include ../../mixins/filter.pug
+include ../../mixins/search.pug
 
 block main
 
@@ -10,6 +12,21 @@ block main
 
     h1(class="mb-4") ĐƠN HÀNG 
     .card.mb-3
+      .card-header Bộ lọc và Tìm kiếm
+        .card-body
+          .row
+            .col-6
+              div.select-container
+                select(name="orderStatus", id="orderStatusList", class="form-select-status-order")
+                  option(value="all") Tất cả
+                  option(value="pending") Chờ xác nhận
+                  option(value="confirmed") Đã xác nhận
+                  option(value="processing") Đang xử lý
+                  option(value="shipping") Đang giao hàng
+                  option(value="delivered" ) Đã giao hàng
+                  option(value="cancelled") Bị hủy
+            .col-6
+              +search()
       .card-header Danh sách đơn hàng
        .card-body
         table(
@@ -24,8 +41,8 @@ block main
               th Thời gian đặt
               th Trạng thái
               th Cập nhật
-              th 
-          tbody
+              th
+          tbody(id="orderList")
             each item,index in orders 
               tr 
                 td #{index + 1}

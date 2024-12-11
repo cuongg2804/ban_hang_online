@@ -137,3 +137,68 @@ module.exports.edit = async (req ,res) => {
     },req.query)
     res.redirect("/admin/orders");
 }
+
+module.exports.orderList = async (req, res) => {
+    try {
+        const find_list = {};
+
+        // Search
+        if (req.query.status !== "all") {
+            find_list.status = req.query.status;
+        }
+
+        // Pagination
+        const countRecord = await Order.countDocuments(find_list);
+        const objectPagination = Pagination(req, countRecord);
+
+        // Get order list from database
+        const orderListFromDb = await Order.find(find_list)
+            .limit(objectPagination.limitItem)
+            .skip(objectPagination.skipItem)
+            .sort({ createdAt: "desc" });
+
+        // Transform order list
+        const orderList = [];
+        for (const record of orderListFromDb) {
+            const newRecord = {
+                ...record._doc, // Copy toàn bộ thuộc tính từ đối tượng gốc
+                totalPrice: 0, // Gán giá trị mặc định
+                products: record.products.map(item => {
+                    const price = (item.price - item.price * (item.discountPercentage / 100)).toFixed(0);
+                    const totalPrice = price * item.quantity;
+                    return {
+                        ...item, // Copy thuộc tính gốc
+                        price, // Cập nhật giá đã chiết khấu
+                        totalPrice // Tổng giá cho từng sản phẩm
+                    };
+                })
+            };
+
+            // Tính tổng giá của toàn bộ đơn hàng
+            newRecord.totalPrice = newRecord.products.reduce((acc, item) => acc + item.totalPrice, 0);
+
+            // Lấy thông tin người tạo
+            const inforAdmin = await Account.findOne({
+                _id: record.user_id
+            }).select("fullName");
+
+            if (inforAdmin) {
+                newRecord.createByFullName = inforAdmin.fullName;
+            }
+
+            orderList.push(newRecord); // Thêm vào danh sách mới
+        }
+
+        // Trả kết quả
+        res.json({
+            code: 200,
+            listOrder: orderList
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            code: 500,
+            message: "Internal Server Error"
+        });
+    }
+};
