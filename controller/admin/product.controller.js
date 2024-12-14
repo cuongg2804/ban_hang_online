@@ -6,6 +6,7 @@ const config = require("../../config/system");
 const productCategory = require("../../models/products-category");
 const createTree  = require("../../helper/category.helper");
 const Account = require("../../models/accounts.model");
+const Distributor = require("../../models/distributor.model");
 
 //[GET] /admin/products
 
@@ -153,11 +154,14 @@ module.exports.create = async (req,res) => {
     const category = await productCategory.find({
         deleted:false
     })
-    
+    const distributor = await Distributor.find({
+        deleted:"false"
+    })
     const newRecords = createTree(category);
     res.render("admin/pages/product/create.pug",{
         pageTitle: "Tạo mới sản phẩm",
-        category : newRecords
+        category : newRecords,
+        distributorList : distributor
     });
 }
 
@@ -198,16 +202,22 @@ module.exports.edit = async (req,res) =>{
     const category = await productCategory.find({
         deleted:false
     })
+
+    const distributor = await Distributor.find({
+        deleted:"false"
+    })
     const newRecords = createTree(category);
     res.render("admin/pages/product/edit.pug",{
         pageTitle : "Chỉnh sửa sản phẩm ",
         products : products,
-        category: newRecords
+        category: newRecords,
+        distributorList : distributor
     });
 }
 
 module.exports.editPatch = async (req,res) => {
-    const id = req.params.id ;     
+    const id = req.params.id ;
+   console.log(req.body);
     req.body.price = parseInt(req.body.price);
     discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
@@ -217,7 +227,7 @@ module.exports.editPatch = async (req,res) => {
     await product.updateOne({
         _id: id
     },req.body )
-    req.flash("success","Cập nhật thành công thành công ");
+    req.flash("success","Cập nhật thành công ");
     res.redirect(`/${config.prefixAdmin}/products`);
 }
 

@@ -18,6 +18,7 @@ dotenv.config();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+
 const routersClient = require("./router/client/index.router");
 const routersAdmin = require("./router/admin/index.router");
 //Flash
@@ -39,8 +40,9 @@ app.set("view engine", "pug");
 app.set("views", `${__dirname}/views`);
 
 database.connect();
-routersClient(app);
 routersAdmin(app);
+routersClient(app);
+
 
 const server = http.createServer(app);
 // app.get("*", (req,res) => {

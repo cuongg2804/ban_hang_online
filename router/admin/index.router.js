@@ -8,6 +8,7 @@ const Auth = require("./auth.router");
 const myAccount = require("./my-account.router");
 const order = require("./orders.router");
 const middlewaresAuth = require("../../middlewares/admin/middlewares.auth");
+const distributor = require("./contributor.router");
 
 const Setting = require("./setting.router");
 
@@ -32,5 +33,6 @@ module.exports = (app) => {
 
     app.use("/" + Admin_Path + "/settings",middlewaresAuth.requireAuth, Setting);
 
-    
+    // GET /admin/distributor
+    app.use("/" + Admin_Path + "/distributor",  middlewaresAuth.requireAuth,distributor);
 }

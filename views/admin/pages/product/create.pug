@@ -31,6 +31,18 @@ block main
               option(value="") -- Chọn danh mục cha --
               if(category)
                 +select-tree(category)
+        div(class="form-group")
+        label(for="products_category_id") Nhà sản xuất
+        select(
+                name="distributor"
+                id="distributor"
+                class="form-control"
+              )
+                option(value="") -- Chọn nhà sản xuất --
+                each distributor in distributorList
+                  option(
+                      value=distributor.id
+                  ) #{distributor.DistributorName}
       div(class="form-group")
         label(for="desc") Mô tả
         textarea(

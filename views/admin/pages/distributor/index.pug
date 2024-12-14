@@ -1,0 +1,107 @@
+extends  ../../layout/default.pug
+include ../../mixins/filter.pug
+include ../../mixins/search.pug
+include ../../mixins/pagination.pug
+include ../../mixins/alert.pug
+block main
+
+    +alert-success()
+
+    h1(class="mb-4") Danh sách nhà sản xuất
+    .card.mb-3
+      .card-header Bộ lọc và Tìm kiếm
+      .card-body
+        .row
+          .col-6
+            +search(keyword)
+          .col-6.text-align-right
+            a(
+              href=`/${prefixAdmin}/distributor/create`
+              class="btn btn-outline-success"
+            ) + Thêm mới
+
+    
+    
+    .card.mb-3          
+      .card-header Danh sách sản phẩm
+        .card-body
+        .row
+            .col-8
+            if(roles.permissions.includes("products-create"))
+              
+        table(
+              class="table table-hover table-sm"
+              checkbox-multi
+            )   
+          thead
+            tr
+              th STT
+              th Tên nhà sản xuất
+              th Địa chỉ
+              th Liên hệ
+              th Trạng thái
+              th Hành động
+
+          tbody
+            each item,index in ContributorList 
+              tr 
+                td #{index+1}
+                td #{item.DistributorName}
+                td !{item.Address}
+                td #{item.Email}
+                td
+                  if(item.status === "active") 
+                    a(
+                      href="javascript:;" 
+                      class="badge badge-success" 
+                      button-changeStatus 
+                      data_id = item.id
+                      data_status = "active"
+                    ) Hoạt động
+                  else
+                    a(
+                      href="javascript:;" 
+                      class="badge badge-danger" 
+                      button-changeStatus 
+                      data_id = item.id 
+                      data_status = "active"
+                    )  Ngừng hoạt động
+                td
+                  a(
+                      href=`/${prefixAdmin}/distributor/detail/${item.id}`
+                      class="btn btn-info btn-sm ml-1"
+                    ) Chi tiết
+                  if(roles.permissions.includes("products-edit"))
+                    a(
+                      href=`/${prefixAdmin}/distributor/edit/${item.id}`
+                      class="btn btn-warning btn-sm"
+                    ) Sửa
+                  if(roles.permissions.includes("products-delete"))
+                    a(
+                      href=`/${prefixAdmin}/distributor/deleted/${item.id}`
+                      class="btn btn-danger btn-sm ml-1"
+                      button-del
+                      data_id = item.id 
+                    ) Xóa
+
+
+      form( 
+        form-changeStatus
+        method="POST"
+        action=""
+        data-path="/admin/products/changestatus"
+      )
+
+      form(
+        form-del
+        method="POST"
+        action=""
+        data-path="/admin/products/delete"
+      )
+
+      form(
+        form-del-all
+        method="POST"
+        action=""
+        data-path="/admin/products/delete-all"
+      )

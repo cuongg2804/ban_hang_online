@@ -1,0 +1,16 @@
+extends ../../layout/default.pug
+block main
+    h1(class="mb-4") #{ContributorDetail.DistributorName}
+
+    div(class="mb-4")
+      span Trạng thái:
+      if (ContributorDetail.status === "active")
+        span(class="badge badge-success") Hoạt động
+      else
+        span(class="badge badge-danger") Dừng hoạt động
+
+ 
+    div(class="mb-4") Địa chỉ: <b>#{ContributorDetail.Address}</b>
+
+  
+    div(class="mb-4") Liên hệ: #{ContributorDetail.email}
