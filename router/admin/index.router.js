@@ -9,6 +9,7 @@ const myAccount = require("./my-account.router");
 const order = require("./orders.router");
 const middlewaresAuth = require("../../middlewares/admin/middlewares.auth");
 const distributor = require("./contributor.router");
+const report = require("../admin/report.router");
 
 const Setting = require("./setting.router");
 
@@ -35,4 +36,8 @@ module.exports = (app) => {
 
     // GET /admin/distributor
     app.use("/" + Admin_Path + "/distributor",  middlewaresAuth.requireAuth,distributor);
+
+    // GET /admin/report
+
+    app.use("/" + Admin_Path + "/report",middlewaresAuth.requireAuth,  report);
 }

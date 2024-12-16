@@ -1,28 +1,27 @@
 extends  ../../layout/default.pug
 
 block main
-  h1 Trang tổng quan bên admin
-  h1 Tổng quan
+  h1 Thống kê
+  h2 Tổng quan
 
-  div #{user.fullName}
   .row.mt-4
-    .col-12
-      .card.mb-4
-        .card-header Thông tin tài khoản
-        .card-body
-          if(user.avatar)
-            img(
-              src=user.avatar
-              style="height: 100px;margin-bottom: 15px;"
-            )
-          if(user.fullName)
-            p Họ tên: <b>#{user.fullName}</b>
-          if(user.email)
-            p Email: <b>#{user.email}</b>
-          if(user.phone)
-            p Số điện thoại: <b>#{user.phone}</b>
-          if(roles.title)
-            p Phân quyền: <b>#{roles.title}</b>
+      .col-6
+        .card.mb-4
+          .card-header Thông tin tài khoản
+          .card-body
+            //- if(user.avatar)
+            //-   img(
+            //-     src=user.avatar
+            //-     style="height: 100px;margin-bottom: 15px;"
+            //-   )
+            if(user.fullName)
+              p Họ tên: <b>#{user.fullName}</b>
+            if(user.email)
+              p Email: <b>#{user.email}</b>
+            if(user.phone)
+              p Số điện thoại: <b>#{user.phone}</b>
+            if(roles.title)
+              p Phân quyền: <b>#{roles.title}</b>
       .col-6
         .card.mb-4
           .card-header Sản phẩm
@@ -51,3 +50,74 @@ block main
             p Số lượng: <b>#{account.total}</b>
             p Hoạt động: <b>#{account.active}</b>
             p Dừng hoạt động: <b>#{account.inactive}</b>
+      .col-6
+        .card.mb-4
+          .card-header Tài khoản admin
+          .card-body
+            p Số lượng: <b>#{account.total}</b>
+            p Hoạt động: <b>#{account.active}</b>
+            p Dừng hoạt động: <b>#{account.inactive}</b>
+  h2 Báo Cáo Bán Hàng
+    h3 Sản Phẩm Đã Bán
+    table
+      tr
+        th Sản Phẩm
+        th Số Lượng
+        th Doanh Thu
+      tr
+        td Áo Thun
+        td 150
+        td 15,000,000 VNĐ
+      tr
+        td Quần Jean
+        td 100
+        td 25,000,000 VNĐ
+      tr
+        td Giày Sneaker
+        td 80
+        td 32,000,000 VNĐ
+      tr
+        td Túi Xách
+        td 50
+        td 20,000,000 VNĐ
+
+    h3 Giao Hàng Thành Công
+    table
+      tr
+        th Trạng Thái
+        th Số Lượng
+        th Tỷ Lệ
+      tr
+        td Giao Hàng Thành Công
+        td 360
+        td 95%
+      tr
+        td Giao Hàng Thất Bại
+        td 20
+        td 5%
+
+    h3 Thống Kê Doanh Thu
+    .chart
+      .bar(style="height: 60%; left: 50px;" title="Tuần 1: 18,000,000 VNĐ")
+      .bar(style="height: 80%; left: 100px;" title="Tuần 2: 24,000,000 VNĐ")
+      .bar(style="height: 70%; left: 150px;" title="Tuần 3: 21,000,000 VNĐ")
+      .bar(style="height: 90%; left: 200px;" title="Tuần 4: 27,000,000 VNĐ")
+    table
+      tr
+        th Thời Gian
+        th Doanh Thu
+      tr
+        td Tuần 1
+        td 18,000,000 VNĐ
+      tr
+        td Tuần 2
+        td 24,000,000 VNĐ
+      tr
+        td Tuần 3
+        td 21,000,000 VNĐ
+      tr
+        td Tuần 4
+        td 27,000,000 VNĐ
+      tr
+        td: strong Tổng Cộng
+        td: strong 90,000,000 VNĐ
